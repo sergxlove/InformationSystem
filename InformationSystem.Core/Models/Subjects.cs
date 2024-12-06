@@ -2,6 +2,13 @@
 {
     public class Subjects
     {
+        public Subjects(int id, string name, string description, int idTeacher)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            IdTeacher = idTeacher;
+        }
         public int Id { get; }
 
         public string Name { get; } = string.Empty;
