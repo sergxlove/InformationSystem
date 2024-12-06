@@ -2,6 +2,17 @@
 {
     public class Teachers
     {
+        public Teachers(int id, string firstName, string secondName, string lastName, DateOnly dateOfBirth,
+            string email, string departament)
+        {
+            Id = id;
+            FirstName = firstName;
+            SecondName = secondName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            Email = email;
+            Departament = departament;
+        }
         public int Id { get; }
 
         public string FirstName { get; } = string.Empty;

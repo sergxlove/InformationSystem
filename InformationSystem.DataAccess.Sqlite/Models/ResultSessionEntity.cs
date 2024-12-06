@@ -2,20 +2,20 @@
 {
     public class ResultSessionEntity
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public int IdSubject { get; }
+        public int IdSubject { get; set; }
 
-        public int IdStudent { get; }
+        public int IdStudent { get; set; }
 
-        public int Semestr { get; }
+        public int Semestr { get; set; }
 
-        public int Grade { get; }
+        public int Grade { get; set; }
 
-        public DateOnly DateResult { get; }
+        public DateOnly DateResult { get; set; }
 
-        public SubjectsEntity? Subjects { get; }
+        public SubjectsEntity? Subjects { get; set; }
 
-        public StudentsEntity? Students { get; }
+        public StudentsEntity? Students { get; set; }
     }
 }

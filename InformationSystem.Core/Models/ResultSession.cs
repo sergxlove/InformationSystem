@@ -2,6 +2,15 @@
 {
     public class ResultSession
     {
+        public ResultSession(int id, int idSubject, int idStudent, int semestr, int grade, DateOnly dateResult) 
+        {
+            Id = id;
+            IdSubject = idSubject;
+            IdStudent = idStudent;
+            Semestr = semestr;
+            Grade = grade;
+            DateResult = dateResult;
+        }
         public int Id { get; }
 
         public int IdSubject { get; }
