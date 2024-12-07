@@ -1,10 +1,11 @@
-﻿using InformationSystem.Core.Models;
+﻿using InformationSystem.Core.Abstructions.RepositoryAbstructions;
+using InformationSystem.Core.Models;
 using InformationSystem.DataAccess.Sqlite.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace InformationSystem.DataAccess.Sqlite.Repositories
 {
-    public class ResultSessionsRepository
+    public class ResultSessionsRepository : IResultSessionsRepository
     {
         private readonly InformationSystemDbContext _context;
 
@@ -13,7 +14,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             _context = context;
         }
 
-        public async Task<List<ResultSession>> Get()
+        public async Task<List<ResultSession>> GetAsync()
         {
             var resultSessionEntity = await _context.ResultSessions
                 .AsNoTracking()
@@ -22,7 +23,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 a.Grade, a.DateResult)).ToList();
         }
 
-        public async Task<int> Add(ResultSession resultSession)
+        public async Task<int> AddAsync(ResultSession resultSession)
         {
             ResultSessionEntity resultSessionEntity = new()
             {
@@ -38,12 +39,12 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return resultSessionEntity.Id;
         }
 
-        public async Task<int> Update(ResultSession resultSession)
+        public async Task<int> UpdateAsync(ResultSession resultSession)
         {
             return await _context.ResultSessions
                 .AsNoTracking()
                 .Where(a => a.Id == resultSession.Id)
-                .ExecuteUpdateAsync(s => s.SetProperty(a =>  a.Id, resultSession.Id)
+                .ExecuteUpdateAsync(s => s.SetProperty(a => a.Id, resultSession.Id)
                 .SetProperty(a => a.IdSubject, resultSession.IdSubject)
                 .SetProperty(a => a.IdStudent, resultSession.IdStudent)
                 .SetProperty(a => a.Semestr, resultSession.Semestr)
@@ -51,7 +52,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 .SetProperty(a => a.DateResult, resultSession.DateResult));
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             return await _context.ResultSessions
                 .AsNoTracking()
