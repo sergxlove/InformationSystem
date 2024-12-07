@@ -1,11 +1,11 @@
-﻿using InformationSystem.Core.Models;
+﻿using InformationSystem.Core.Abstructions.RepositoryAbstructions;
+using InformationSystem.Core.Models;
 using InformationSystem.DataAccess.Sqlite.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
 
 namespace InformationSystem.DataAccess.Sqlite.Repositories
 {
-    public class StudentsRepository
+    public class StudentsRepository : IStudentsRepository
     {
         private readonly InformationSystemDbContext _context;
 
@@ -14,7 +14,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             _context = context;
         }
 
-        public async Task<List<Students>> Get()
+        public async Task<List<Students>> GetAsync()
         {
             var studentsEntity = await _context.Students
                 .AsNoTracking()
@@ -23,12 +23,12 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 a.DateOfBirth, a.Email, a.IdGroup)).ToList();
         }
 
-        public async Task<Students?> GetByLastName(string lastName)
+        public async Task<Students?> GetByLastNameAsync(string lastName)
         {
             var studentEntity = await _context.Students
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.LastName.Contains(lastName));
-            if(studentEntity is not null)
+            if (studentEntity is not null)
             {
                 return new Students(studentEntity.Id, studentEntity.FirstName, studentEntity.SecondName,
                     studentEntity.LastName, studentEntity.DateOfBirth, studentEntity.Email, studentEntity.IdGroup);
@@ -36,7 +36,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return null;
         }
 
-        public async Task<int> Add(Students student)
+        public async Task<int> AddAsync(Students student)
         {
             StudentsEntity studentsEntity = new()
             {
@@ -53,7 +53,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return studentsEntity.Id;
         }
 
-        public async Task<int> Update(Students student)
+        public async Task<int> UpdateAsync(Students student)
         {
             return await _context.Students
                 .AsNoTracking()
@@ -67,7 +67,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 .SetProperty(a => a.IdGroup, student.IdGroup));
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             return await _context.Students
                 .AsNoTracking()

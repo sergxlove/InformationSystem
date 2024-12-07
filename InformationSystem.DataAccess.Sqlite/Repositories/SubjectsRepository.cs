@@ -1,10 +1,11 @@
-﻿using InformationSystem.Core.Models;
+﻿using InformationSystem.Core.Abstructions.RepositoryAbstructions;
+using InformationSystem.Core.Models;
 using InformationSystem.DataAccess.Sqlite.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace InformationSystem.DataAccess.Sqlite.Repositories
 {
-    public class SubjectsRepository
+    public class SubjectsRepository : ISubjectsRepository
     {
         private readonly InformationSystemDbContext _context;
 
@@ -13,7 +14,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             _context = context;
         }
 
-        public async Task<List<Subjects>> Get()
+        public async Task<List<Subjects>> GetAsync()
         {
             var subjectsEntity = await _context.Subjects
                 .AsNoTracking()
@@ -21,19 +22,19 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return subjectsEntity.Select(a => new Subjects(a.Id, a.Name, a.Description, a.IdTeacher)).ToList();
         }
 
-        public async Task<Subjects?> GetByName(string name)
+        public async Task<Subjects?> GetByNameAsync(string name)
         {
             var subjectEntity = await _context.Subjects
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Name.Contains(name));
-            if(subjectEntity is not null)
+            if (subjectEntity is not null)
             {
                 return new Subjects(subjectEntity.Id, subjectEntity.Name, subjectEntity.Description, subjectEntity.IdTeacher);
             }
             return null;
         }
 
-        public async Task<int> Add(Subjects subject)
+        public async Task<int> AddAsync(Subjects subject)
         {
             SubjectsEntity subjectsEntity = new()
             {
@@ -47,7 +48,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return subjectsEntity.Id;
         }
 
-        public async Task<int> Update(Subjects subject)
+        public async Task<int> UpdateAsync(Subjects subject)
         {
             return await _context.Subjects
                 .AsNoTracking()
@@ -58,7 +59,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 .SetProperty(a => a.IdTeacher, subject.IdTeacher));
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             return await _context.Subjects
                 .AsNoTracking()

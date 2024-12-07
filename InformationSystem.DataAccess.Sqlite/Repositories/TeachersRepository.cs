@@ -1,10 +1,11 @@
-﻿using InformationSystem.Core.Models;
+﻿using InformationSystem.Core.Abstructions.RepositoryAbstructions;
+using InformationSystem.Core.Models;
 using InformationSystem.DataAccess.Sqlite.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace InformationSystem.DataAccess.Sqlite.Repositories
 {
-    public class TeachersRepository
+    public class TeachersRepository : ITeachersRepository
     {
         private readonly InformationSystemDbContext _context;
 
@@ -13,7 +14,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             _context = context;
         }
 
-        public async Task<List<Teachers>> Get()
+        public async Task<List<Teachers>> GetAsync()
         {
             var teachersEntity = await _context.Teachers
                 .AsNoTracking()
@@ -22,12 +23,12 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 a.DateOfBirth, a.Email, a.Departament)).ToList();
         }
 
-        public async Task<Teachers?> GetByName(string lastname)
+        public async Task<Teachers?> GetByNameAsync(string lastname)
         {
             var teacherEntity = await _context.Teachers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.LastName.Contains(lastname));
-            if(teacherEntity is not null)
+            if (teacherEntity is not null)
             {
                 return new Teachers(teacherEntity.Id, teacherEntity.FirstName, teacherEntity.SecondName, teacherEntity.LastName,
                     teacherEntity.DateOfBirth, teacherEntity.Email, teacherEntity.Departament);
@@ -35,7 +36,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return null;
         }
 
-        public async Task<int> Add(Teachers teacher)
+        public async Task<int> AddAsync(Teachers teacher)
         {
             TeachersEntity teachersEntity = new()
             {
@@ -52,11 +53,11 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return teachersEntity.Id;
         }
 
-        public async Task<int> Update(Teachers teacher)
+        public async Task<int> UpdateAsync(Teachers teacher)
         {
             return await _context.Teachers
                 .AsNoTracking()
-                .Where(a =>  a.Id == teacher.Id)
+                .Where(a => a.Id == teacher.Id)
                 .ExecuteUpdateAsync(s => s.SetProperty(a => a.Id, teacher.Id)
                 .SetProperty(a => a.FirstName, teacher.FirstName)
                 .SetProperty(a => a.SecondName, teacher.SecondName)
@@ -66,11 +67,11 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
                 .SetProperty(a => a.Departament, teacher.Departament));
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             return await _context.Teachers
                 .AsNoTracking()
-                .Where (a => a.Id == id)
+                .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();
         }
     }

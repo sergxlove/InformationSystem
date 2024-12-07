@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InformationSystem.Core\InformationSystem.Core.csproj" />
+    <ProjectReference Include="..\InformationSystem.DataAccess.Sqlite\InformationSystem.DataAccess.Sqlite.csproj" />
+  </ItemGroup>
+
 </Project>
