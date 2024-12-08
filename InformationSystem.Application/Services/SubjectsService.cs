@@ -1,9 +1,10 @@
-﻿using InformationSystem.Core.Abstructions.RepositoryAbstructions;
+﻿using InformationSystem.Core.Abstractions.ServiceAbstractions;
+using InformationSystem.Core.Abstructions.RepositoryAbstructions;
 using InformationSystem.Core.Models;
 
 namespace InformationSystem.Application.Services
 {
-    public class SubjectsService
+    public class SubjectsService : ISubjectsService
     {
         private readonly ISubjectsRepository _repository;
 

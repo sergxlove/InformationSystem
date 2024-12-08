@@ -21,6 +21,8 @@ namespace InformationSystem.DataAccess.Sqlite
 
         public DbSet<TeachersEntity> Teachers { get; set; }
 
+        public DbSet<UsersEntity> Users { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@"D:\projects\InformationSystem\Data\data.db");
@@ -33,6 +35,7 @@ namespace InformationSystem.DataAccess.Sqlite
             modelBuilder.ApplyConfiguration(new StudentsConfigurations());
             modelBuilder.ApplyConfiguration(new SubjectsConfigurations());
             modelBuilder.ApplyConfiguration(new TeachersConfigurations());
+            modelBuilder.ApplyConfiguration(new UsersConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }
