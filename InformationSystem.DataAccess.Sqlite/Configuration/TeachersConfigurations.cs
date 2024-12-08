@@ -11,6 +11,9 @@ namespace InformationSystem.DataAccess.Sqlite.Configuration
             builder.ToTable("Teachers");
             builder.HasKey(x => x.Id);
 
+            builder.Property(a => a.Id)
+                .ValueGeneratedOnAdd();
+
             builder.HasMany(a => a.Subjects)
                 .WithOne(a => a.Teachers)
                 .HasForeignKey(a => a.IdTeacher);
