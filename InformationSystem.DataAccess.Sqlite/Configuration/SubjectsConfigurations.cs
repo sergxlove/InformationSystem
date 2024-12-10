@@ -10,7 +10,6 @@ namespace InformationSystem.DataAccess.Sqlite.Configuration
         {
             builder.ToTable("Subjects");
             builder.HasKey(a => a.Id);
-
             builder.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
 

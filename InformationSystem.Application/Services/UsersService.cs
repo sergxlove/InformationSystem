@@ -18,7 +18,7 @@ namespace InformationSystem.Application.Services
             return await _repository.AddAsync(user);
         }
 
-        public async Task<string> CheckLoginPasswordUserAsync(string login, string password)
+        public async Task<Users?> CheckLoginPasswordUserAsync(string login, string password)
         {
             return await _repository.CheckLoginPassword(login, password);
         }

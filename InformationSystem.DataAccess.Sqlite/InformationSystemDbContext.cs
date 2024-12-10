@@ -8,7 +8,7 @@ namespace InformationSystem.DataAccess.Sqlite
     {
         public InformationSystemDbContext()
         {
-            
+            Database.EnsureCreated();
         }
 
         public DbSet<GroupsEntity> Groups { get; set; }
@@ -25,7 +25,7 @@ namespace InformationSystem.DataAccess.Sqlite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"D:\projects\InformationSystem\Data\data.db");
+            optionsBuilder.UseSqlite(@"Data Source=D:\projects\InformationSystem\Data\data.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -10,9 +10,9 @@ namespace InformationSystem.DataAccess.Sqlite.Configuration
         {
             builder.ToTable("ResultSession");
             builder.HasKey(a =>  a.Id);
-
             builder.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
+
 
             builder.HasOne(a => a.Students)
                 .WithMany(a => a.Results)

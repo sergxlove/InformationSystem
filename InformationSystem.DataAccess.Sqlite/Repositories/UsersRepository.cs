@@ -28,7 +28,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             return usersEntity.Id;
         }
 
-        public async Task<string> CheckLoginPassword(string login, string password)
+        public async Task<Users?> CheckLoginPassword(string login, string password)
         {
             var users = await _context.Users
                 .AsNoTracking()
@@ -37,14 +37,14 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
             {
                 if (users.Password != password)
                 {
-                    return "bad login or password";
+                    return null;
                 }
                 else
                 {
-                    return users.Role;
+                    return new Users(users.Id, users.Login, users.Password, users.Role);
                 }
             }
-            return "bad login or password";
+            return null;
         }
 
         public async Task<int> Delete(string login, string password)
