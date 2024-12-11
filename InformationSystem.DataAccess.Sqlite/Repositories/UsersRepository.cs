@@ -18,7 +18,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
         {
             UsersEntity usersEntity = new()
             {
-                Id = user.Id,
+                //Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
                 Role = user.Role
@@ -51,7 +51,7 @@ namespace InformationSystem.DataAccess.Sqlite.Repositories
         {
             return await _context.Users
                 .AsNoTracking()
-                .Where(a => a.Login == login && a.Password == password)
+                .Where(a => a.Login == login)
                 .ExecuteDeleteAsync();
         }
     }
